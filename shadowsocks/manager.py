@@ -93,6 +93,7 @@ class Manager(object):
         t.add_to_loop(self._loop)
         u.add_to_loop(self._loop)
         self._relays[port] = (t, u)
+        return port
 
     def remove_port(self, config):
         port = int(config['server_port'])
@@ -121,8 +122,8 @@ class Manager(object):
                     logging.error('can not find server_port in config')
                 else:
                     if command == 'add':
-                        self.add_port(a_config)
-                        self._send_control_data(b'ok')
+                        res = self.add_port(a_config)
+                        self._send_control_data(b'ok:' + res)
                     elif command == 'remove':
                         self.remove_port(a_config)
                         self._send_control_data(b'ok')
