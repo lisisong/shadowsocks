@@ -125,10 +125,10 @@ class Manager(object):
                 else:
                     if command == 'add':
                         res = self.add_port(a_config)
-                        self._send_control_data(b'ok:' + str(res))
+                        self._send_control_data(b'add-ok:' + str(res))
                     elif command == 'remove':
                         res = self.remove_port(a_config)
-                        self._send_control_data(b'ok:' + str(res))
+                        self._send_control_data(b'remove-ok:' + str(res))
                     elif command == 'ping':
                         self._send_control_data(b'pong')
                     else:
