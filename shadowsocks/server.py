@@ -29,6 +29,7 @@ from shadowsocks import shell, daemon, eventloop, tcprelay, udprelay, \
 
 
 def main():
+    logging.info("server file start");
     shell.check_python()
 
     config = shell.get_config(False)
