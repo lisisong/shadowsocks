@@ -93,6 +93,7 @@ class Manager(object):
         t.add_to_loop(self._loop)
         u.add_to_loop(self._loop)
         self._relays[port] = (t, u)
+        logging.info("adding done")
 
     def remove_port(self, config):
         port = int(config['server_port'])
