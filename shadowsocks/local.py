@@ -29,9 +29,9 @@ from shadowsocks import shell, daemon, eventloop, tcprelay, udprelay, asyncdns
 
 @shell.exception_handle(self_=False, exit_code=1)
 def main():
-    logging.info("local file start")
-    shell.check_python()
 
+    shell.check_python()
+    logging.info("local file start")
     # fix py2exe
     if hasattr(sys, "frozen") and sys.frozen in \
             ("windows_exe", "console_exe"):
