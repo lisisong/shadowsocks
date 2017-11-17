@@ -60,6 +60,7 @@ class Manager(object):
             self._control_socket = socket.socket(family,
                                                  socket.SOCK_DGRAM)
             self._control_socket.bind(addr)
+            logging.info("bind:"+addr)
             self._control_socket.setblocking(False)
         except (OSError, IOError) as e:
             logging.error(e)
