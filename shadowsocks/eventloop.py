@@ -191,13 +191,14 @@ class EventLoop(object):
         self._stopping = True
 
     def run(self):
-        logging.info("in loop")
         events = []
         while not self._stopping:
+            logging.info("196")
             asap = False
             try:
                 events = self.poll(TIMEOUT_PRECISION)
             except (OSError, IOError) as e:
+                logging.info("201")
                 if errno_from_exception(e) in (errno.EPIPE, errno.EINTR):
                     # EPIPE: Happens when the client closes the connection
                     # EINTR: Happens when received a signal
@@ -210,6 +211,7 @@ class EventLoop(object):
                     continue
 
             for sock, fd, event in events:
+                logging.info("214")
                 handler = self._fdmap.get(fd, None)
                 if handler is not None:
                     handler = handler[1]
@@ -218,7 +220,9 @@ class EventLoop(object):
                     except (OSError, IOError) as e:
                         shell.print_exception(e)
             now = time.time()
+            logging.info("223")
             if asap or now - self._last_time >= TIMEOUT_PRECISION:
+                logging.info("225")
                 for callback in self._periodic_callbacks:
                     callback()
                 self._last_time = now
