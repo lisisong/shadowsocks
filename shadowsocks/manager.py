@@ -128,6 +128,7 @@ class Manager(object):
                         self.remove_port(a_config)
                         self._send_control_data(b'ok')
                     elif command == 'ping':
+                        logging.info("recv ping comd")
                         self._send_control_data(b'pong')
                     else:
                         logging.error('unknown command %s', command)
