@@ -60,7 +60,6 @@ class Manager(object):
             self._control_socket = socket.socket(family,
                                                  socket.SOCK_DGRAM)
             self._control_socket.bind(addr)
-            logging.info("bind:"+addr)
             self._control_socket.setblocking(False)
         except (OSError, IOError) as e:
             logging.error(e)
@@ -94,7 +93,7 @@ class Manager(object):
         t.add_to_loop(self._loop)
         u.add_to_loop(self._loop)
         self._relays[port] = (t, u)
-        logging.info("adding done")
+        return port
 
     def remove_port(self, config):
         port = int(config['server_port'])
@@ -123,13 +122,12 @@ class Manager(object):
                     logging.error('can not find server_port in config')
                 else:
                     if command == 'add':
-                        self.add_port(a_config)
-                        self._send_control_data(b'ok')
+                        res = self.add_port(a_config)
+                        self._send_control_data(b'ok:' + res)
                     elif command == 'remove':
                         self.remove_port(a_config)
                         self._send_control_data(b'ok')
                     elif command == 'ping':
-                        logging.info("recv ping comd")
                         self._send_control_data(b'pong')
                     else:
                         logging.error('unknown command %s', command)
