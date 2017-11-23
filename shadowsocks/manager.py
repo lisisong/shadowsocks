@@ -107,6 +107,7 @@ class Manager(object):
         else:
             logging.error("server not exist at %s:%d" % (config['server'],
                                                          port))
+        return port
 
     def handle_event(self, sock, fd, event):
         if sock == self._control_socket and event == eventloop.POLL_IN:
@@ -123,10 +124,10 @@ class Manager(object):
                 else:
                     if command == 'add':
                         res = self.add_port(a_config)
-                        self._send_control_data(b'ok:' + res)
+                        self._send_control_data(b'ok:' + str(res))
                     elif command == 'remove':
-                        self.remove_port(a_config)
-                        self._send_control_data(b'ok')
+                        res = self.remove_port(a_config)
+                        self._send_control_data(b'ok:' + str(res))
                     elif command == 'ping':
                         self._send_control_data(b'pong')
                     else:
